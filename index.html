@@ -281,95 +281,88 @@ function goPortalWithToken(){ const TOKEN=qs("token"); try{ const u=new URL(PORT
 
 // ======== PERGUNTAS ========
 // Escalas padrão
-const FREQ5   = ["Nunca","Raramente","Às vezes","Frequentemente","Quase sempre"];
-const SEVER4  = ["Não","Leve","Moderada","Grave"];
-const YESNO   = ["Sim","Não"];
-const YNP     = ["Sim","Não","Não sei"];
+const FREQ5   = ["Nunca","Raramente","Às vezes","Frequentemente","Quase sempre", "Não se aplica"];
+const SEVER4  = ["Não","Leve","Moderada","Grave", "Não se aplica"];
+const YESNO   = ["Sim","Não", "Não se aplica"];
+const YNP     = ["Sim","Não","Não sei", "Não se aplica"];
 
 
-const QUESTIONS = [
- { type:"checkbox", section:"Neurodesenvolvimento — História", text:"Marcos de linguagem atrasados na infância", options: YNP },
-  { type:"checkbox", section:"Neurodesenvolvimento — História", text:"Dificuldades escolares persistentes (leitura/escrita/matemática) desde cedo", options: YNP },
-  { type:"checkbox", section:"Neurodesenvolvimento — História", text:"Histórico familiar de TEA/TDAH/DI/Transtornos de linguagem", options: ["Não","TEA","TDAH","DI","Linguagem","Tiques","Outros"] },
-  { type:"checkbox", section:"Neurodesenvolvimento — História", text:"Recebeu intervenções ou adaptações (reforço escolar, fono, TO) na infância/adolescência", options: YNP },
+const QUESTIONS =
+[
+  { type:"checkbox", text:"Eu tenho dificuldade persistente para aprender, entender e/ou usar linguagem (palavras e frases) no dia a dia, abaixo do esperado para minha idade", options: FREQ5 },
+  { type:"checkbox", text:"Minhas dificuldades de linguagem atrapalham de forma significativa minha comunicação, minha vida social e/ou meu desempenho escolar/profissional", options: SEVER4 },
+  { type:"checkbox", text:"Essas dificuldades de linguagem existem desde a infância (mesmo que tenham ficado mais evidentes quando as exigências aumentaram)", options: YNP },
 
-  // ——— TEA — Comunicação Social ———
-  { type:"checkbox", section:"Neurodesenvolvimento — TEA (Comunic./Social)", text:"Dificuldade para iniciar/manter conversas espontâneas", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TEA (Comunic./Social)", text:"Dificuldade em compreender pistas sociais (expressões, tom de voz, subtexto)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TEA (Comunic./Social)", text:"Uso de linguagem literal; dificuldade com ironias/duplo sentido", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TEA (Comunic./Social)", text:"Dificuldade em ajustar comunicação ao contexto (formal x informal)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TEA (Comunic./Social)", text:"Evita ou sustenta pouco o contato ocular", options: FREQ5 },
+  { type:"checkbox", text:"Eu tenho dificuldade persistente para produzir sons da fala de forma clara (troco/omito/distorço sons) e isso reduz a inteligibilidade da minha fala", options: FREQ5 },
+  { type:"checkbox", text:"Minha fala pouco clara atrapalha de forma significativa minha comunicação, minha participação social e/ou meu desempenho escolar/profissional", options: SEVER4 },
+  { type:"checkbox", text:"Essa dificuldade para articular sons começou na infância", options: YNP },
 
-  // ——— TEA — Comportamentos/Interesses/Sensorial ———
-  { type:"checkbox", section:"Neurodesenvolvimento — TEA (Comport./Interesses)", text:"Interesses restritos e intensos (monotrópicos), ocupando muito tempo/energia", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TEA (Comport./Interesses)", text:"Necessidade de rotinas/regras rígidas; sofrimento com mudanças inesperadas", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TEA (Comport./Interesses)", text:"Movimentos repetitivos (balançar mãos/corpo, bater objetos)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TEA (Comport./Interesses)", text:"Máscara/camuflagem social (forçar naturalidade, script de conversa) com custo de exaustão", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TEA (Comport./Interesses)", text:"Hipersensibilidade/hipossensibilidade sensorial (som, luz, toque, cheiros, texturas)", options: FREQ5 },
+  { type:"checkbox", text:"Eu tenho dificuldade persistente para usar a comunicação com objetivos sociais (ex.: cumprimentar, iniciar/encerrar conversa, compartilhar informações de forma adequada)", options: FREQ5 },
+  { type:"checkbox", text:"Eu tenho dificuldade persistente para ajustar a comunicação ao contexto e às pessoas (ex.: formal/informal, adulto/criança, ambiente de casa/escola/trabalho)", options: FREQ5 },
+  { type:"checkbox", text:"Essas dificuldades de comunicação social atrapalham de forma significativa minhas relações, meu desempenho escolar/profissional e/ou meu funcionamento no dia a dia", options: SEVER4 },
+  { type:"checkbox", text:"Essas dificuldades de comunicação social existem desde cedo (mesmo que tenham ficado mais evidentes com o aumento das demandas sociais)", options: YNP },
 
-  // ——— COMUNICAÇÃO SOCIAL (Pragmática) ———
-  { type:"checkbox", section:"Neurodesenvolvimento — Comunicação (Pragmática)", text:"Dificuldade com turnos de fala (interrompe ou não engaja)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Comunicação (Pragmática)", text:"Desorganização do discurso (foge do tópico/perde o fio)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Comunicação (Pragmática)", text:"Dificuldade para adaptar vocabulário/registro ao interlocutor", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Comunicação (Pragmática)", text:"Problemas em compreender metáforas/insinuações", options: FREQ5 },
+  { type:"checkbox", text:"Eu tenho dificuldade persistente em pelo menos uma área acadêmica (leitura, escrita e/ou matemática) que dura há pelo menos 6 meses, mesmo com ajuda/intervenções direcionadas", options: YNP },
+  { type:"checkbox", text:"Essas dificuldades acadêmicas atrapalham de forma significativa meu desempenho escolar/profissional e/ou tarefas do dia a dia", options: SEVER4 },
+  { type:"checkbox", text:"Essas dificuldades começaram nos anos escolares (mesmo que eu tenha percebido mais quando a exigência aumentou)", options: YNP },
 
-  // ——— TDAH — Desatenção (Adulto/Avançado) ———
-  { type:"checkbox", section:"Neurodesenvolvimento — TDAH (Desatenção)", text:"Erros por descuido em tarefas/relatórios/detalhes", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TDAH (Desatenção)", text:"Dificuldade de manter atenção em leituras/reuniões", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TDAH (Desatenção)", text:"Perde objetos com frequência (chaves, crachá, celular)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TDAH (Desatenção)", text:"Tempo subjetivo distorcido (subestima prazos; 'time blindness')", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TDAH (Desatenção)", text:"Paralisa diante de muitas tarefas (sobrecarga por onde começar)", options: FREQ5 },
+  { type:"checkbox", text:"Minha coordenação motora é abaixo do esperado para minha idade (sou desajeitado(a) e/ou lento(a) e impreciso(a) em habilidades motoras)", options: FREQ5 },
+  { type:"checkbox", text:"Essas dificuldades motoras atrapalham de forma significativa minhas atividades do dia a dia (autocuidado, tarefas, autonomia) e/ou meu desempenho escolar/profissional/lazer", options: SEVER4 },
+  { type:"checkbox", text:"Essas dificuldades motoras começaram na infância", options: YNP },
 
-  // ——— TDAH — Hiperatividade/Impulsividade (Adulto/Avançado) ———
-  { type:"checkbox", section:"Neurodesenvolvimento — TDAH (Hiper/Impulso)", text:"Inquietação interna/externa (mexer, levantar sem perceber)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TDAH (Hiper/Impulso)", text:"Fala em excesso/interrompe respostas", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TDAH (Hiper/Impulso)", text:"Age sem pensar; compras/decisões por impulso", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TDAH (Hiper/Impulso)", text:"Dificuldade para esperar a própria vez (fila/reunião)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — TDAH (Hiper/Impulso)", text:"Oscilação rápida entre hiperfoco e dispersão", options: FREQ5 },
+  { type:"checkbox", text:"Eu faço movimentos repetitivos e aparentemente sem função (ex.: balançar o corpo, bater a cabeça, morder-me, golpear-me) de forma recorrente", options: FREQ5 },
+  { type:"checkbox", text:"Esses movimentos repetitivos atrapalham de forma significativa meu funcionamento (social, escolar/profissional ou outras atividades) e/ou podem causar lesão", options: SEVER4 },
+  { type:"checkbox", text:"Esses movimentos repetitivos começaram na infância", options: YNP },
 
-  // ——— TRANSTORNOS ESPECÍFICOS DA APRENDIZAGEM (LE/ES/MA) ———
-  { type:"checkbox", section:"Neurodesenvolvimento — Aprendizagem", text:"Leitura lenta/fadiga; perde linha/pula palavras", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Aprendizagem", text:"Ortografia com trocas/omissões persistentes", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Aprendizagem", text:"Dificuldades para planejar/redigir textos (coesão/coerência)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Aprendizagem", text:"Dificuldade com fatos aritméticos (tabuada)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Aprendizagem", text:"Erros em cálculo mental e escrito (com ou sem suporte)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Aprendizagem", text:"Dificuldade em problemas de texto/interpretação matemática", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Aprendizagem", text:"Dificuldades iniciaram na escola e persistem na vida adulta", options: YNP },
+  { type:"checkbox", text:"Eu tenho tiques: movimentos ou sons repentinos, rápidos, recorrentes e não ritmados", options: YNP },
+  { type:"checkbox", text:"Ao longo da minha vida, eu já tive múltiplos tiques motores e pelo menos um tique vocal (mesmo que não ao mesmo tempo)", options: YNP },
+  { type:"checkbox", text:"Desde o primeiro tique, meus tiques persistem há mais de 1 ano (com períodos de piora e melhora)", options: YNP },
+  { type:"checkbox", text:"Meus tiques começaram antes dos 18 anos", options: YNP },
 
-  // ——— TRANSTORNO DO DESENVOLVIMENTO DA COORDENAÇÃO (TDC) ———
-  { type:"checkbox", section:"Neurodesenvolvimento — Coordenação (TDC)", text:"Desajeito motor (tropeços/derruba objetos/evita esportes)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Coordenação (TDC)", text:"Dificuldade em motricidade fina (talheres, botões, zíper, cortar)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Coordenação (TDC)", text:"Letra cansativa/ilegível; lentidão para escrever à mão", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Coordenação (TDC)", text:"Dificuldade para aprender sequências motoras (dirigir, manobras)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Coordenação (TDC)", text:"Evita atividades que exigem coordenação/força/ritmo", options: FREQ5 },
+  { type:"checkbox", text:"Eu tenho apenas um tipo de tique de forma persistente (apenas motor OU apenas vocal), e não os dois tipos ao longo do quadro", options: YNP },
+  { type:"checkbox", text:"Eu nunca tive, ao longo do quadro, múltiplos tiques motores E pelo menos um tique vocal (ou seja, eu nunca preenchi critérios para Tourette)", options: YNP },
 
-  // ——— TRANSTORNOS DE TICA ———
-  { type:"checkbox", section:"Neurodesenvolvimento — Tiques", text:"Presença de tiques (motores/vocais) atuais ou passados", options: ["Não","Motores","Vocais","Motores e vocais"] },
-  { type:"checkbox", section:"Neurodesenvolvimento — Tiques", text:"Sensação premonitória antes do tique (tensão/alívio após)", options: YNP },
-  { type:"checkbox", section:"Neurodesenvolvimento — Tiques", text:"Capacidade de suprimir por curto período com rebote depois", options: YNP },
-  { type:"checkbox", section:"Neurodesenvolvimento — Tiques", text:"Piora dos tiques com estresse/fadiga/estímulos", options: FREQ5 },
+  { type:"checkbox", text:"Desde o primeiro tique, esses tiques duram menos de 1 ano", options: YNP },
+  { type:"checkbox", text:"Eu nunca preenchi critérios para Tourette nem para tique motor/vocal persistente (crônico)", options: YNP },
 
-  // ——— MOVIMENTOS ESTEREOTIPADOS ———
-  { type:"checkbox", section:"Neurodesenvolvimento — Movimentos estereotipados", text:"Movimentos repetitivos não funcionais (sacudir mãos, bater)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Movimentos estereotipados", text:"Autoagressão associada (morder-se, bater a cabeça/mãos)", options: YNP },
+  { type:"checkbox", text:"Eu tenho dificuldade persistente de reciprocidade socioemocional (por exemplo: manter uma troca natural na conversa, compartilhar interesses/emoções e iniciar ou responder interações sociais)", options: FREQ5 },
+  { type:"checkbox", text:"Eu tenho dificuldade persistente em usar e integrar comunicação não verbal (por exemplo: contato visual, gestos, expressão facial e linguagem corporal) de forma adequada ao contexto", options: FREQ5 },
+  { type:"checkbox", text:"Eu tenho dificuldade persistente para desenvolver, manter e compreender relacionamentos (por exemplo: fazer/manter amizades, ajustar meu comportamento ao contexto e demonstrar interesse por pares)", options: FREQ5 },
 
-  // ——— SENSORIAL ———
-  { type:"checkbox", section:"Neurodesenvolvimento — Sensorial", text:"Hipersensibilidade a sons (barulhos, vozes, ambientes cheios)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Sensorial", text:"Hipersensibilidade a luz/visuais (claridade, padrões)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Sensorial", text:"Hipersensibilidade tátil (tecidos/etiquetas/toque)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Sensorial", text:"Questões com cheiros/sabores/texturas de alimentos", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Sensorial", text:"Busca sensorial (cheirar/pegar objetos, pressão profunda)", options: FREQ5 },
+  { type:"checkbox", text:"Eu faço movimentos repetitivos e/ou uso objetos de forma repetitiva e incomum (por exemplo: balançar o corpo, bater as mãos, alinhar ou girar objetos)", options: FREQ5 },
+  { type:"checkbox", text:"Eu repito palavras/frases ou tenho um jeito de falar repetitivo e estereotipado (por exemplo: ecolalia, frases prontas, repetir o que ouvi)", options: FREQ5 },
+  { type:"checkbox", text:"Eu tenho sofrimento intenso ou irritação desproporcional quando pequenas rotinas mudam, ou quando preciso fazer transições entre atividades", options: FREQ5 },
+  { type:"checkbox", text:"Eu tenho rigidez de pensamento e dificuldade de flexibilizar (por exemplo: preciso que as coisas sejam “do meu jeito”, tenho dificuldade de mudar de ideia ou de aceitar mudanças)", options: FREQ5 },
+  { type:"checkbox", text:"Eu tenho interesses muito intensos e restritos, com foco anormal em temas específicos (por exemplo: fico preso(a) em um assunto e volto nele repetidamente)", options: FREQ5 },
+  { type:"checkbox", text:"Eu reajo de forma muito intensa a estímulos sensoriais (sons, luz, cheiros, texturas) ou, ao contrário, pareço sentir pouco dor/temperatura", options: FREQ5 },
+  { type:"checkbox", text:"Eu busco estímulos sensoriais de forma incomum (por exemplo: cheirar/tocar demais, fascinação por luzes, movimentos, rodinhas, reflexos)", options: FREQ5 },
 
-  // ——— DI (Deficiência Intelectual) ———
-  { type:"checkbox", section:"Neurodesenvolvimento — DI", text:"Dificuldade para compreender ideias abstratas (tempo, dinheiro, regras)", options: SEVER4 },
-  { type:"checkbox", section:"Neurodesenvolvimento — DI", text:"Necessidade de ajuda para atividades do dia a dia", options: ["Não","Ajuda às vezes","Ajuda frequente","Ajuda o tempo todo","Não sei"] },
-  { type:"checkbox", section:"Neurodesenvolvimento — DI", text:"Adaptação social/profissional limitada mesmo com treino", options: SEVER4 },
-  { type:"checkbox", section:"Neurodesenvolvimento — DI", text:"Dificuldades começaram na infância/adolescência", options: YNP },
+  { type:"checkbox", text:"Essas dificuldades sociais e/ou esses comportamentos repetitivos existem desde o início do meu desenvolvimento (mesmo que tenham ficado mais evidentes quando as exigências aumentaram)", options: YNP },
+  { type:"checkbox", text:"Essas dificuldades sociais e/ou esses comportamentos repetitivos causam prejuízo significativo na minha vida atual (social, escolar, profissional e/ou autonomia)", options: SEVER4 },
 
-  // ——— FORÇAS & APOIOS ———
-  { type:"checkbox", section:"Neurodesenvolvimento — Forças & Apoios", text:"Habilidades específicas acima da média", options: ["Não","Linguagem","Matemática","Artes","Tecnologia","Psicomotoras","Outras"] },
-  { type:"checkbox", section:"Neurodesenvolvimento — Forças & Apoios", text:"Usa estratégias de compensação (listas, timers, apps, scripts sociais)", options: FREQ5 },
-  { type:"checkbox", section:"Neurodesenvolvimento — Forças & Apoios", text:"Recebe/recebeu adaptações no trabalho/estudo (tempo extra, tarefas divididas)", options: YNP }
+  { type:"checkbox", text:"Eu frequentemente cometo erros por descuido ou deixo passar detalhes importantes em tarefas (escola, trabalho ou rotina)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente tenho dificuldade de manter a atenção em tarefas ou atividades longas (aulas, leituras, conversas, reuniões)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente pareço não escutar quando falam diretamente comigo (mesmo sem distrações óbvias)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente não consigo seguir instruções até o fim e deixo tarefas inacabadas porque perco o fio (não por oposição)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente tenho dificuldade para organizar tarefas e atividades (sequência, planejamento, gerenciamento de tempo)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente evito, adio ou reluto em iniciar tarefas que exigem esforço mental prolongado (estudo, relatórios, burocracias)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente perco coisas necessárias para tarefas ou atividades (materiais, chaves, celular, documentos)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente me distraio facilmente com estímulos externos (ou, se sou adulto(a), com pensamentos aleatórios)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente esqueço atividades do dia a dia (compromissos, recados, pagamentos, retornar mensagens)", options: FREQ5 },
+
+  { type:"checkbox", text:"Eu frequentemente remexo mãos/pés, me contorço na cadeira ou demonstro inquietação motora", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente levanto em situações em que eu deveria permanecer sentado(a) (sala de aula, reunião, consultório)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente me movimento demais de forma inadequada (ou, se sou adulto(a), sinto uma inquietação interna intensa)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente tenho dificuldade de relaxar, descansar ou fazer atividades de forma calma", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente pareço estar “a mil”, como se estivesse “com motor ligado”, e tenho dificuldade de ficar parado(a)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente falo demais, mais do que o esperado para o contexto", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente respondo antes da pergunta terminar ou interrompo completando frases dos outros", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente tenho dificuldade de esperar a minha vez (fila, jogos, conversa, turnos)", options: FREQ5 },
+  { type:"checkbox", text:"Eu frequentemente interrompo, me intrometo ou invado o espaço do outro (entro em conversas, pego coisas, “assumo o controle”)", options: FREQ5 },
+
+  { type:"checkbox", text:"Vários desses sintomas de desatenção e/ou hiperatividade-impulsividade já estavam presentes antes dos meus 12 anos", options: YNP },
+  { type:"checkbox", text:"Esses sintomas de desatenção e/ou hiperatividade-impulsividade aparecem em dois ou mais contextos (por exemplo: casa e escola; casa e trabalho; trabalho e vida social)", options: YNP },
+  { type:"checkbox", text:"Esses sintomas de desatenção e/ou hiperatividade-impulsividade causam prejuízo significativo na minha vida (social, acadêmica e/ou profissional)", options: SEVER4 },
 ];
 
 
